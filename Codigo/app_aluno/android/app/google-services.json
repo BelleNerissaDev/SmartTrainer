@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "345791657823",
+    "project_id": "tcc-belle-rafael",
+    "storage_bucket": "tcc-belle-rafael.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:345791657823:android:646e17635cf3b9c5f368ea",
+        "android_client_info": {
+          "package_name": "com.smarttrainer.appaluno"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAk565hKQ50HEA2893Bl5rqW6m_KSjsDCA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:345791657823:android:2ad0bc517c1b2288f368ea",
+        "android_client_info": {
+          "package_name": "tcc.appaluno"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAk565hKQ50HEA2893Bl5rqW6m_KSjsDCA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

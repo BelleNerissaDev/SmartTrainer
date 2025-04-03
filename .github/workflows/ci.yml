@@ -1,0 +1,144 @@
+name: Test, Lint and Code Coverage
+
+on:
+  push:
+    branches:
+      - main
+      - setup
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  check-modifications:
+    runs-on: ubuntu-latest
+
+    outputs:
+      aluno_modified: ${{ steps.check_aluno.outputs.aluno_modified }}
+      personal_modified: ${{ steps.check_personal.outputs.personal_modified }}
+      force_test_aluno: ${{ steps.check_aluno.outputs.force_test_aluno }}
+      force_test_personal: ${{ steps.check_personal.outputs.force_test_personal }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 100
+
+      - name: Check app_aluno modifications
+        id: check_aluno
+        run: |
+          MODIFIED_FILES=$(git diff --name-only HEAD~1 HEAD)
+          echo "Modified files: $MODIFIED_FILES"
+          echo "Commit message: ${{ github.event.head_commit.message }}"
+
+          if echo "$MODIFIED_FILES" | grep -q 'Codigo/app_aluno'; then
+            echo "Directory 'Codigo/app_aluno' is modified"
+            echo "aluno_modified=true" >> $GITHUB_OUTPUT
+          else
+            echo "Directory 'Codigo/app_aluno' is not modified"
+            echo "aluno_modified=false" >> $GITHUB_OUTPUT
+          fi
+
+          # Check if commit message contains specific string
+          if echo "${{ github.event.head_commit.message }}" | grep -q '\[force test-aluno\]'; then
+            echo "Commit message contains '[force test-aluno]'"
+            echo "force_test_aluno=true" >> $GITHUB_OUTPUT
+          else
+            echo "Commit message does not contain '[force test-aluno]'"
+            echo "force_test_aluno=false" >> $GITHUB_OUTPUT
+          fi
+      
+      - name: Check app_personal modifications
+        id: check_personal
+        run: |
+          MODIFIED_FILES=$(git diff --name-only HEAD~1 HEAD)
+          echo "Modified files: $MODIFIED_FILES"
+          echo "Commit message: ${{ github.event.head_commit.message }}"
+
+          if echo "$MODIFIED_FILES" | grep -q 'Codigo/app_personal'; then
+            echo "Directory 'Codigo/app_personal' is modified"
+            echo "personal_modified=true" >> $GITHUB_OUTPUT
+          else
+            echo "Directory 'Codigo/app_personal' is not modified"
+            echo "personal_modified=false" >> $GITHUB_OUTPUT
+          fi
+
+          # Check if commit message contains specific string
+          if echo "${{ github.event.head_commit.message }}" | grep -q '\[force test-personal\]'; then
+            echo "Commit message contains '[force test-personal]'"
+            echo "force_test_personal=true" >> $GITHUB_OUTPUT
+          else
+            echo "Commit message does not contain '[force test-personal]'"
+            echo "force_test_personal=false" >> $GITHUB_OUTPUT
+          fi
+
+
+  test-aluno:
+    needs: check-modifications
+    if: ${{ needs.check-modifications.outputs.aluno_modified== 'true' || needs.check-modifications.outputs.force_test_aluno == 'true' }}
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        flutter-version: '3.24.0'
+
+    - name: Install lcov
+      run: sudo apt-get install -y lcov
+      
+    - name: Install dependencies
+      working-directory: Codigo/app_aluno
+      run: make init
+
+    - name: Run linter
+      working-directory: Codigo/app_aluno
+      run: make analyze
+
+    - name: Run tests
+      working-directory: Codigo/app_aluno
+      run: make test-all
+
+    - name: Check coverage
+      if: ${{ !contains(github.event.head_commit.message,'[ignore-coverage]') }}
+      working-directory: Codigo/app_aluno
+      run: make coverage
+
+  test-personal:
+    needs: check-modifications
+    if: ${{ needs.check-modifications.outputs.personal_modified == 'true' || needs.check-modifications.outputs.force_test_personal == 'true' }}
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        flutter-version: '3.24.0'
+
+    - name: Install lcov
+      run: sudo apt-get install -y lcov
+      
+    - name: Install dependencies
+      working-directory: Codigo/app_personal
+      run: make init
+
+    - name: Run linter
+      working-directory: Codigo/app_personal
+      run: make analyze
+
+    - name: Run tests
+      working-directory: Codigo/app_personal
+      run: make test-all
+
+    - name: Check coverage
+      if: ${{ !contains(github.event.head_commit.message,'[ignore-coverage]') }}
+      working-directory: Codigo/app_personal
+      run: make coverage
+  

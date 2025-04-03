@@ -1,0 +1,1 @@
+# Pasta adicionar o assets do app.

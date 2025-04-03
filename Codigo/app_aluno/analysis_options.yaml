@@ -1,0 +1,33 @@
+linter:
+  rules:
+    - annotate_overrides
+    - avoid_print
+    - cast_nullable_to_non_nullable
+    - camel_case_types
+    - camel_case_extensions
+    - empty_catches
+    - empty_constructor_bodies
+    - file_names
+    - matching_super_parameters
+    - no_literal_bool_comparisons
+    - prefer_foreach
+    - prefer_for_elements_to_map_fromIterable
+    - always_use_package_imports
+    - unnecessary_await_in_return
+    - use_enums
+    - use_if_null_to_convert_nulls_to_bools
+    - void_checks
+    - valid_regexps
+    - prefer_single_quotes
+    - avoid_void_async
+    - lines_longer_than_80_chars
+    - prefer_const_constructors
+    - prefer_final_fields
+    - prefer_is_empty
+    - prefer_is_not_empty
+    - avoid_positional_boolean_parameters
+
+analyzer: 
+  errors: 
+    dead_code: warning
+    unused_import: warning

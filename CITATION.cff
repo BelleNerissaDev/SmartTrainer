@@ -1,0 +1,31 @@
+cff-version: 1.0.1
+message: Please cite this software using these metadata.
+title: Smart Trinaer - Sistema de Acompanhamento e Treinamento Personalizado
+authors:
+  - family-names: Nerissa Aguiar Elizeu
+    given-names: Belle
+  - family-names: Duarte Pereira
+    given-names: Rafael
+  - name-suffix: Professor
+    affiliation: PUC Minas
+    family-names: Silva Tavares
+    given-names: Cleiton
+  - name-suffix: Professor
+    affiliation: PUC Minas
+    family-names: Boechat Seufitelli
+    given-names: Danilo
+  - name-suffix: Professor
+    affiliation: PUC Minas
+    family-names: Oliveira Batisteli
+    given-names: João Pedro 
+  - name-suffix: Professor
+    affiliation: PUC Minas
+    family-names: Marco
+    given-names: Rodrigo Costa
+keywords:
+  - treinamento personalizado
+  - smarttrainer
+repository-code: https://github.com/ICEI-PUC-Minas-PPLES-TI/plf-es-2024-1-tcci-0393100-dev-belle-elizeu-e-rafael-duarte
+license: CC-BY-4.0
+version: 2.5.0
+date-released: 2024-11-24

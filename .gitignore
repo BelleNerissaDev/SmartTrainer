@@ -1,0 +1,4 @@
+.vscode
+*.asta.lock
+*.bak
+*.mocks.dart
